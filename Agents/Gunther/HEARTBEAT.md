@@ -1,4 +1,5 @@
-# HEARTBEAT — Gunther
+# HEARTBEAT.md
 
-> Placeholder. Content will be copied from the stow repo during Phase 2 (Agent Identity Migration).
-> Source: `~/projects/openclaw-config/home/workspace/agents/gunther/HEARTBEAT.md`
+# Keep this file empty (or with only comments) to skip heartbeat API calls.
+
+# Add tasks below when you want the agent to check something periodically.
