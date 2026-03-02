@@ -1,0 +1,10 @@
+# OpenClaw runtime files (contain live API keys/tokens)
+auth-profiles.json
+models.json
+
+# Obsidian workspace state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# OS
+.DS_Store
