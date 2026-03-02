@@ -114,7 +114,63 @@ Before moving the file:
   `- YYYY-MM-DD HH:MM MST | dropbox → inbox:<destination agent> | attempt 1`
 Then move the file to the destination agent's `inbox/`.
 
-## 5. Inbox notifications
+## 5. Vault inbox → route to agent inboxes (bridge mode)
+
+Check `/home/gunther/workspace/vault/Tasks/Inbox/` for `.md` files.
+
+For each file found:
+
+### 5a. Dead-letter check
+
+Read the `routed_attempts` field from the YAML frontmatter (between the `---` delimiters at the top of the file). If `routed_attempts` is 3 or more:
+
+1. Move the file to `/home/gunther/workspace/vault/Tasks/Dead Letter/` (create with `mkdir -p` if needed).
+2. Create a notification in `/home/gunther/workspace/agents/gunther/inbox/` named `YYYY-MM-DD-HH-MM-dead-letter-<original-filename>`:
+   ```
+   # Dead-Letter Notice: <original filename>
+
+   Task for: gunther
+
+   ## Summary
+
+   Geeves dead-lettered a vault task after 3 failed routing attempts.
+
+   **File:** /home/gunther/workspace/vault/Tasks/Dead Letter/<original filename>
+   **Time:** YYYY-MM-DD HH:MM MST
+
+   ## Action Required
+
+   - [ ] Review the dead-lettered task
+   - [ ] Re-route manually or discard
+   ```
+3. Skip to the next file — do not route this one.
+
+### 5b. Normal routing
+
+1. Read the `task_for` field from YAML frontmatter.
+
+2. Map to destination agent inbox:
+   - `gunther` → `/home/gunther/workspace/agents/gunther/inbox/`
+   - `plato` → `/home/gunther/workspace/agents/plato/inbox/`
+   - `devi` → `/home/gunther/workspace/agents/devi/inbox/`
+   - `reggie` → `/home/gunther/workspace/agents/reggie/inbox/`
+   - `geeves` → `/home/gunther/workspace/agents/geeves/inbox/`
+   - `charlie` → `/home/gunther/workspace/agents/charlie/inbox/`
+
+3. If `task_for` is missing or unrecognized: route to Gunther's inbox and append a `## Blocked` section to the file: `- [ ] Unrecognized task_for value — route manually`.
+
+4. Increment `routed_attempts` in the frontmatter (add it as `routed_attempts: 1` if not present).
+
+5. Move the file to the destination agent's `inbox/`.
+
+6. Notify the destination agent (same method as Stage 2b):
+   - Run `sessions_list`, find the session matching the agent name.
+   - Use `sessions_send` with the session key. Message: `"New task in your inbox: [task filename]"`. Use `timeoutSeconds: 0`.
+   - If no active session, skip.
+
+**Bridge mode note:** Both vault inbox (this stage) and legacy dropbox/email pipelines remain active. Vault-sourced tasks are moved to legacy agent inboxes during this transition period.
+
+## 6. Inbox notifications
 
 Run:
 ```bash
@@ -128,7 +184,7 @@ For each file found, notify the agent:
 
 (Gunther's inbox is skipped — Gunther is not a session agent.)
 
-## 6. Stuck task detection
+## 7. Stuck task detection
 
 For each check below, run the command then act on each result as described.
 
@@ -146,7 +202,7 @@ For each file: append `> Escalated by Geeves: this task appears stuck in {agent}
 
 **Unrouted blocked files** are handled by Stage 1.
 
-## 7. Done/ cleanup (low priority)
+## 8. Done/ cleanup (low priority)
 
 Run:
 ```bash
@@ -154,7 +210,7 @@ find /home/gunther/workspace/agents/*/done -name "*.md" -type f -mtime +30 2>/de
 ```
 For each file listed, delete it with `rm`.
 
-## 8. Workspace backup (conditional)
+## 9. Workspace backup (conditional)
 
 Run `bash /home/gunther/workspace/scripts/backup-workspace.sh --force` if the last backup was more than 4 hours ago.
 
