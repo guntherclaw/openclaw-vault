@@ -1,7 +1,7 @@
 # OpenClaw → Obsidian Control Plane: Migration Roadmap
 
 **Created:** 2026-03-01
-**Status:** Phase 1 in progress — vault skeleton created, plugins not yet installed
+**Status:** Phases 1–4 complete (automated steps). Pending: Obsidian install + plugin setup (manual), agent verification (Phase 2 step 3), Phase 2 stow cleanup.
 **Vault root:** `~/workspace/vault/`
 **Backup repo:** `openclaw-vault` (private GitHub, to be created)
 
