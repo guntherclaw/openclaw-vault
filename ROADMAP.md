@@ -1,7 +1,7 @@
 # OpenClaw → Obsidian Control Plane: Migration Roadmap
 
 **Created:** 2026-03-01
-**Status:** Phase 1 ✅ complete. Phase 2 in progress — agent files synced to vault, pending agent verification + stow cleanup. Phase 3 ✅ complete. Phase 4 ✅ complete.
+**Status:** Phases 1–4 ✅ complete. Remaining: Phase 3 cutover from bridge mode to vault-only routing (say "Geeves, switch to vault-only routing" when ready).
 **Vault root:** `~/workspace/vault/`
 **Backup repo:** `openclaw-vault` (private GitHub ✅)
 
@@ -101,7 +101,7 @@ All steps complete as of 2026-03-05.
 
 ---
 
-## Phase 2 — Agent Identity Migration 🔄 IN PROGRESS
+## Phase 2 — Agent Identity Migration ✅ COMPLETE
 
 **Goal:** All agents load their identity files from `vault/Agents/<Name>/` instead of
 the stow repo. The stow repo entries become redundant and are cleaned up.
@@ -111,19 +111,9 @@ the stow repo. The stow repo entries become redundant and are cleaned up.
 - [x] **Copy identity files into vault** — all 6 agents synced from stow repo (2026-03-05)
 - [x] **`openclaw.json` updated** — all `agentDir` paths point to `vault/Agents/<Name>/`
 - [x] **`Brain/BRAIN.md` populated** from canonical `~/workspace/brain/BRAIN.md`
-- [ ] **Verify each agent loads correctly**
-  - Restart OpenClaw (if not already done since agentDir change)
-  - Send each agent a test message via Telegram; confirm correct identity
-  - Check `~/.openclaw/logs/` for any "file not found" errors on SOUL.md
-- [ ] **Remove old stow-managed identity files** (after successful verification):
-  ```bash
-  for agent in geeves reggie plato devi charlie; do
-    rm ~/projects/openclaw-config/home/workspace/agents/$agent/*.md
-  done
-  rm ~/projects/openclaw-config/home/workspace/{SOUL,IDENTITY,AGENTS,TOOLS,USER,HEARTBEAT}.md
-  cd ~/projects/openclaw-config && git add -A && git commit
-  ```
-- [ ] **Update stow-sync.sh** ignore list if needed to skip vault-managed paths.
+- [x] **Verify each agent loads correctly** — all 6 agents confirmed responding via Telegram (2026-03-05)
+- [x] **Remove old stow-managed identity files** — 36 files deleted from stow repo (2026-03-05)
+- [x] **stow-sync.sh** — no changes needed; files absent from stow package are not tracked
 
 > **Note:** Going forward, agent identity files live in `vault/Agents/<Name>/` and are
 > managed there directly. obsidian-git auto-commits and pushes changes. The stow repo
