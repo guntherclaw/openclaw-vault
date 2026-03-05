@@ -114,7 +114,7 @@ Before moving the file:
   `- YYYY-MM-DD HH:MM MST | dropbox → inbox:<destination agent> | attempt 1`
 Then move the file to the destination agent's `inbox/`.
 
-## 5. Vault inbox → route to agent inboxes (bridge mode)
+## 5. Vault Tasks inbox → route new tasks
 
 Check `/home/gunther/workspace/vault/Tasks/Inbox/` for `.md` files.
 
@@ -122,10 +122,11 @@ For each file found:
 
 ### 5a. Dead-letter check
 
-Read the `routed_attempts` field from the YAML frontmatter (between the `---` delimiters at the top of the file). If `routed_attempts` is 3 or more:
+Read the YAML frontmatter. Check the `routed_attempts` field (default 0 if absent).
 
-1. Move the file to `/home/gunther/workspace/vault/Tasks/Dead Letter/` (create with `mkdir -p` if needed).
-2. Create a notification in `/home/gunther/workspace/agents/gunther/inbox/` named `YYYY-MM-DD-HH-MM-dead-letter-<original-filename>`:
+**If `routed_attempts >= 3`:** dead-letter it:
+1. Move the file to `/home/gunther/workspace/vault/Tasks/Dead Letter/`
+2. Create a notification in `/home/gunther/workspace/agents/gunther/inbox/` named `YYYY-MM-DD-HH-MM-vault-dead-letter-<original-filename>`:
    ```
    # Dead-Letter Notice: <original filename>
 
@@ -141,34 +142,98 @@ Read the `routed_attempts` field from the YAML frontmatter (between the `---` de
    ## Action Required
 
    - [ ] Review the dead-lettered task
-   - [ ] Re-route manually or discard
+   - [ ] Re-route manually to the correct agent, or discard
    ```
-3. Skip to the next file — do not route this one.
+3. Skip to the next file.
+
+**If `routed_attempts < 3`:** proceed to 5b.
 
 ### 5b. Normal routing
 
-1. Read the `task_for` field from YAML frontmatter.
+- Read the `task_for` field from YAML frontmatter.
+- If `task_for` is missing or blank, route to Gunther.
+- **If `kanban_tracked: true` in frontmatter:**
+  - If `routed_attempts > 0`: **skip** (already routed; Stage 5c handles status sync going forward).
+  - If `routed_attempts == 0`: **copy** the file to the destination agent's `inbox/` (do not move it); increment `routed_attempts` by 1 in the vault copy's frontmatter; leave the vault copy in `vault/Tasks/Inbox/`.
+- **Otherwise (non-kanban file):** increment `routed_attempts` by 1 in the frontmatter; move the file to the destination agent's `inbox/`.
+- Notify the destination agent via `sessions_send` (same as Stage 2b), fire-and-forget.
 
-2. Map to destination agent inbox:
-   - `gunther` → `/home/gunther/workspace/agents/gunther/inbox/`
-   - `plato` → `/home/gunther/workspace/agents/plato/inbox/`
-   - `devi` → `/home/gunther/workspace/agents/devi/inbox/`
-   - `reggie` → `/home/gunther/workspace/agents/reggie/inbox/`
-   - `geeves` → `/home/gunther/workspace/agents/geeves/inbox/`
-   - `charlie` → `/home/gunther/workspace/agents/charlie/inbox/`
+**Bridge mode:** Both this vault inbox pipeline and the legacy dropbox pipeline (Stage 4)
+remain active until Paul explicitly confirms cutover ("Geeves, switch to vault-only routing").
 
-3. If `task_for` is missing or unrecognized: route to Gunther's inbox and append a `## Blocked` section to the file: `- [ ] Unrecognized task_for value — route manually`.
+## 5b. KANBAN.md Inbox section — convert inline tasks to routable files
 
-4. Increment `routed_attempts` in the frontmatter (add it as `routed_attempts: 1` if not present).
+Read `/home/gunther/workspace/vault/Tasks/KANBAN.md`.
 
-5. Move the file to the destination agent's `inbox/`.
+Find the section between `## Inbox` and the next `## ` heading. Collect lines starting
+with `- [ ]` that are NOT:
+  - template placeholders (text: "Drop new tasks here")
+  - note-backed links (format: `- [ ] [[...]]`)
 
-6. Notify the destination agent (same method as Stage 2b):
-   - Run `sessions_list`, find the session matching the agent name.
-   - Use `sessions_send` with the session key. Message: `"New task in your inbox: [task filename]"`. Use `timeoutSeconds: 0`.
-   - If no active session, skip.
+These are real inline tasks that haven't been routed yet.
 
-**Bridge mode note:** Both vault inbox (this stage) and legacy dropbox/email pipelines remain active. Vault-sourced tasks are moved to legacy agent inboxes during this transition period.
+For each inline task found:
+
+1. Extract the full text (the `- [ ]` line plus any indented continuation lines).
+2. Guess the destination agent from the task text:
+   - Mentions "charlie" (any case) → charlie
+   - Mentions "reggie" (any case) → reggie
+   - Mentions "plato" (any case) → plato
+   - Mentions "devi" (any case) → devi
+   - Otherwise → gunther
+3. Create a task file in `vault/Tasks/Inbox/`:
+   - Filename: `YYYY-MM-DD-HH-MM-<short-slug>.md` (slug = first 4-5 words, lowercase, hyphenated)
+   - Frontmatter: `task_for`, `status: inbox`, `routed_attempts: 0`, `created: today`, `priority: normal`, `kanban_tracked: true`
+   - Body: `## Original Task\n\n<full extracted text>`
+4. In KANBAN.md, replace the inline entry block (the `- [ ]` line + any indented continuation
+   lines) with a single linked-note card: `- [ ] [[<filename-without-.md>]]`. Keep it in the
+   Inbox column. Do not remove the entry.
+5. The new .md file will be picked up by Stage 5a/5b on the next heartbeat (or immediately
+   if this stage runs before Stage 5 on this cycle — safe either way).
+
+## 5c. KANBAN status sync — move cards to reflect agent folder state
+
+Collect all kanban_tracked vault task files:
+```bash
+find /home/gunther/workspace/vault/Tasks -name "*.md" -type f
+```
+
+For each vault file with `kanban_tracked: true` in frontmatter:
+
+1. Extract the bare filename (without `.md` extension) — this is the Obsidian link target.
+
+2. Find the matching file in agent workspace folders:
+   ```bash
+   find /home/gunther/workspace/agents/*/inbox \
+        /home/gunther/workspace/agents/*/inprogress \
+        /home/gunther/workspace/agents/*/blocked \
+        /home/gunther/workspace/agents/*/outbox \
+        /home/gunther/workspace/agents/*/done \
+        /home/gunther/workspace/dead-letter \
+        -name "<filename>.md" -type f 2>/dev/null
+   ```
+
+3. Determine the target KANBAN column and vault subdir from agent folder:
+   - `agent/inbox/`          → column "Inbox"        vault dir: `vault/Tasks/Inbox/`
+   - `agent/inprogress/`     → column "In Progress"  vault dir: `vault/Tasks/In Progress/`
+   - `agent/blocked/`        → column "Blocked"      vault dir: `vault/Tasks/Blocked/`
+   - `agent/outbox/`         → column "Outbox"       vault dir: `vault/Tasks/Outbox/`
+   - `agent/done/`           → column "Done"         vault dir: `vault/Tasks/Done/`
+   - `workspace/dead-letter/`→ column "Dead Letter"  vault dir: `vault/Tasks/Dead Letter/`
+
+4. If the vault file is already in the correct vault/Tasks/ subdir AND the KANBAN card
+   is already in the correct column: no action needed.
+
+5. If status changed:
+   a. Move the vault `.md` file to the correct `vault/Tasks/` subdir.
+   b. In KANBAN.md, find `- [ ] [[<filename>]]` (or `- [x] [[<filename>]]`) in any column,
+      remove it, then insert in the target column:
+      - Done or Dead Letter columns: use `- [x] [[<filename>]]`
+      - All other columns: use `- [ ] [[<filename>]]`
+   c. Leave all non-tracked entries (template placeholders) untouched.
+
+6. If no matching agent file is found: the task may have been manually deleted or not yet
+   routed. Leave vault file and KANBAN card in their current positions.
 
 ## 6. Inbox notifications
 
