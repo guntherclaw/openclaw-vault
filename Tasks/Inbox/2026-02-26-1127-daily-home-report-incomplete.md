@@ -2,7 +2,7 @@
 kanban_tracked: true
 status: inbox
 task_for: devi
-routed_attempts: 1
+routed_attempts: 2
 created: 2026-02-26
 priority: normal
 ---

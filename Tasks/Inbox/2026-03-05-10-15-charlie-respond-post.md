@@ -1,7 +1,7 @@
 ---
 task_for: charlie
 status: inbox
-routed_attempts: 1
+routed_attempts: 2
 created: 2026-03-05
 priority: normal
 kanban_tracked: true
