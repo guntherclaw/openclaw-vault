@@ -6,7 +6,8 @@ kanban-plugin: board
 
 ## Inbox
 
-- [ ] Drop new tasks here — Geeves will route them
+- [ ] [[2026-02-28-23-02-email-A-task-for-Chalie]]
+- [ ] [[2026-02-26-11-28-home-report]]
 
 
 ## In Progress
@@ -26,7 +27,6 @@ kanban-plugin: board
 
 
 - [ ] Completed tasks land here
-- [x] [[2026-02-23-17-08-email-leisure-america-debate]]
 - [x] [[2026-02-21-19-52-charlie-ukraine-response]]
 - [x] [[2026-02-21-20-49-charlie-fresh-colbert-response]]
 - [x] [[2026-02-22-14-47-charlie-talarico-undecided-voters]]
@@ -51,11 +51,8 @@ kanban-plugin: board
 
 ## Dead Letter
 
-- [x] [[2026-02-28-23-02-email-A-task-for-Chalie]]
-- [x] [[2026-02-26-11-28-home-report]]
 
 
-- [x] [[2026-02-22-reggie-investigate-home-report]]
 
 
 %% kanban:settings
