@@ -7,9 +7,7 @@ kanban-plugin: board
 ## Inbox
 
 - [ ] Drop new tasks here — Geeves will route them
-- [ ] [[2026-03-05-10-15-charlie-respond-post]]
-- [ ] [[2026-03-05-10-15-charlie-respond-post]]
-- [ ] [[2026-02-26-1127-daily-home-report-incomplete]]
+
 
 - [ ] [[2026-02-22-reggie-investigate-home-report]]
 - [ ] [[2026-02-28-23-02-email-A-task-for-Chalie]]
@@ -24,7 +22,6 @@ kanban-plugin: board
 ## Blocked
 
 - [ ] Tasks waiting on Paul for answers or decisions
-- [ ] [[2026-03-05-09-50-email-Task-for-Reggie]]
 
 
 ## Outbox
@@ -58,7 +55,7 @@ kanban-plugin: board
 
 ## Dead Letter
 
-- [ ] Tasks that failed routing after 3+ attempts — needs manual review
+- [x] [[2026-03-05-10-15-charlie-respond-post]]
 
 
 
