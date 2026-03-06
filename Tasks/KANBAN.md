@@ -29,9 +29,8 @@ kanban-plugin: board
 - [ ] Tasks ready to hand off to another agent
 
 
-## Done
 
-**Complete**
+- [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [ ] Completed tasks land here
 - [x] [[2026-02-23-17-08-email-leisure-america-debate]]
 - [x] [[2026-02-21-19-52-charlie-ukraine-response]]
@@ -55,7 +54,7 @@ kanban-plugin: board
 
 ## Dead Letter
 
-- [x] [[2026-03-05-10-15-charlie-respond-post]]
+
 
 
 
