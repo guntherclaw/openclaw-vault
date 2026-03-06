@@ -32,7 +32,6 @@ kanban-plugin: board
 
 - [ ] Completed tasks land here
 - [x] [[2026-02-23-17-08-email-leisure-america-debate]]
-- [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [x] [[2026-02-21-19-52-charlie-ukraine-response]]
 - [x] [[2026-02-21-20-49-charlie-fresh-colbert-response]]
 - [x] [[2026-02-22-14-47-charlie-talarico-undecided-voters]]
@@ -52,9 +51,7 @@ kanban-plugin: board
 - [x] [[2026-02-18-16-40-dairy-queen-franchise-plan-for-plato]]
 
 
-## Dead Letter
-
-
+- [x] [[2026-03-05-10-15-charlie-respond-post]]
 
 
 
