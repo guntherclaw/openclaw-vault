@@ -1,7 +1,7 @@
 ---
 task_for: gunther
 status: inbox
-routed_attempts: 2
+routed_attempts: 3
 created: 2026-02-28
 priority: normal
 kanban_tracked: true
@@ -51,3 +51,10 @@ ill-informed digs into the thread, why can't they help themselves?
 
 ## Geeves Routing Log
 - 2026-03-03 00:25 MST | dropbox → inbox:gunther | attempt 1
+- 2026-03-06 12:15 MST | DEAD-LETTER | would be attempt 4 — moved to /home/gunther/workspace/dead-letter/ for manual review
+
+## Dead-Letter Notice
+
+Moved to dead-letter by Geeves on 2026-03-06 12:15 MST.
+Routed 3 times without completing. Manual review required.
+Last routing: outbox:geeves — intended for gunther

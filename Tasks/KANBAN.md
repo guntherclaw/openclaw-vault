@@ -10,8 +10,6 @@ kanban-plugin: board
 
 
 - [ ] [[2026-02-22-reggie-investigate-home-report]]
-- [ ] [[2026-02-28-23-02-email-A-task-for-Chalie]]
-- [ ] [[2026-02-26-11-28-home-report]]
 
 
 ## In Progress
@@ -54,6 +52,10 @@ kanban-plugin: board
 - [x] [[2026-03-05-10-15-charlie-respond-post]]
 
 
+## Dead Letter
+
+- [x] [[2026-02-28-23-02-email-A-task-for-Chalie]]
+- [x] [[2026-02-26-11-28-home-report]]
 
 
 %% kanban:settings
