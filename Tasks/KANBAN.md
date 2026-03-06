@@ -6,8 +6,8 @@ kanban-plugin: board
 
 ## Inbox
 
-- [ ] [[2026-02-28-23-02-email-A-task-for-Chalie]]
-- [ ] [[2026-02-26-11-28-home-report]]
+
+
 
 
 ## In Progress
@@ -51,6 +51,8 @@ kanban-plugin: board
 
 ## Dead Letter
 
+- [x] [[2026-02-28-23-02-email-A-task-for-Chalie]]
+- [x] [[2026-02-26-11-28-home-report]]
 
 
 
