@@ -30,8 +30,8 @@ kanban-plugin: board
 
 
 
-- [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [ ] Completed tasks land here
+- [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [x] [[2026-02-23-17-08-email-leisure-america-debate]]
 - [x] [[2026-02-21-19-52-charlie-ukraine-response]]
 - [x] [[2026-02-21-20-49-charlie-fresh-colbert-response]]
