@@ -8,8 +8,9 @@ kanban-plugin: board
 
 - [ ] Drop new tasks here — Geeves will route them
 - [ ] [[2026-03-05-10-15-charlie-respond-post]]
+- [ ] [[2026-03-05-10-15-charlie-respond-post]]
 - [ ] [[2026-02-26-1127-daily-home-report-incomplete]]
-- [ ] [[2026-03-05-09-50-email-Task-for-Reggie]]
+
 - [ ] [[2026-02-22-reggie-investigate-home-report]]
 - [ ] [[2026-02-28-23-02-email-A-task-for-Chalie]]
 - [ ] [[2026-02-26-11-28-home-report]]
@@ -23,6 +24,7 @@ kanban-plugin: board
 ## Blocked
 
 - [ ] Tasks waiting on Paul for answers or decisions
+- [ ] [[2026-03-05-09-50-email-Task-for-Reggie]]
 
 
 ## Outbox
