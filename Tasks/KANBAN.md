@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Inbox
 
+- [ ] Drop new tasks here — Geeves will route them
+
 
 
 ## In Progress
