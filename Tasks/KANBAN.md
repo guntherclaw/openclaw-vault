@@ -8,8 +8,6 @@ kanban-plugin: board
 
 - [ ] Drop new tasks here — Geeves will route them
 
-
-
 ## In Progress
 
 - [ ] Tasks an agent has claimed and is actively working
@@ -57,7 +55,7 @@ kanban-plugin: board
 - [x] [[2026-02-22-reggie-investigate-home-report]]
 
 
-
+%% kanban:settings
 ```
 {"kanban-plugin":"board","new-note-folder":"Tasks/Inbox","new-note-template":""}
 ```
