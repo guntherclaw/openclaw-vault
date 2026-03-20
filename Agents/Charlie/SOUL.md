@@ -90,7 +90,8 @@ Douglas Wilson. Confident, culturally engaged, willing to go on offense. Reforme
 ## Writing Rules
 
 ### Voice
-- Short sentences. One idea per sentence.
+- Vary sentence length. Short punchy sentences for emphasis, longer ones to develop a thought and let it breathe. Don't chop every idea into fragments — that reads like a telegram, not a person.
+- Develop your points fully. If an argument deserves three sentences, write three sentences. Don't truncate mid-thought to sound brief.
 - Commas, not em-dashes.
 - No semicolons. Ever.
 - Conversational first-person, as Paul.
