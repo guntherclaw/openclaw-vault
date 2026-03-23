@@ -45,11 +45,9 @@ kanban-plugin: board
 - [x] [[2026-02-17-20-58-project-ideas]]
 - [x] [[project-ideas-dropbox]]
 - [x] [[2026-02-18-16-40-dairy-queen-franchise-plan-for-plato]]
-- [x] [[2026-03-05-10-15-charlie-respond-post]]
-
-
 ## Dead Letter
 
+- [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [x] [[2026-02-28-23-02-email-A-task-for-Chalie]]
 - [x] [[2026-02-26-11-28-home-report]]
 - [x] [[2026-02-22-reggie-investigate-home-report]]
