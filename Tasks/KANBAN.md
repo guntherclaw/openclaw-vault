@@ -36,21 +36,20 @@ kanban-plugin: board
 - [x] [[2026-02-21-21-57-charlie-jan6-response]]
 - [x] [[2026-02-22-14-24-charlie-talarico-response]]
 - [x] [[2026-02-17-09-59-task-for-devi]]
-- [x] [[2026-02-16-ProjectIdeas-dropbox-STUCK]]
-- [x] [[2026-02-17-10-58-dropbox-projectideas]]
-- [x] [[2026-02-17-11-38-ProjectIdeas]]
-- [x] [[2026-02-17-ProjectIdeas]]
 - [x] [[2026-02-16-22-17-us-geography-quiz-for-reggie]]
 - [x] [[2026-02-18-16-40-track-dairy-queen-report]]
-- [x] [[2026-02-17-20-58-project-ideas]]
-- [x] [[project-ideas-dropbox]]
 - [x] [[2026-02-18-16-40-dairy-queen-franchise-plan-for-plato]]
+- [x] [[2026-03-08-15-14-task-for-charlie]]
+- [x] [[2026-03-18-00-46-email-task-for-charlie]]
+- [x] [[2026-03-20-matt-email-response-completed]]
+- [x] [[2026-03-22-duplicate-matt-task]]
 ## Dead Letter
 
 - [x] [[2026-03-05-10-15-charlie-respond-post]]
 - [x] [[2026-02-28-23-02-email-A-task-for-Chalie]]
 - [x] [[2026-02-26-11-28-home-report]]
 - [x] [[2026-02-22-reggie-investigate-home-report]]
+- [x] [[2026-02-26-1127-daily-home-report-incomplete]]
 
 
 %% kanban:settings
